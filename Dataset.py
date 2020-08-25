@@ -117,6 +117,67 @@ class TitleTextDataset(FakenewsDataset):
 
 
 
+
+class TextDataset(FakenewsDataset):
+
+    def __init__(self):
+        super().__init__()
+
+        for json_record in tqdm(self._positive_train):
+            x = json_record['text']
+            self._X.append(x)
+            self._Y.append(1)
+            self._is_train.append(True)
+
+        for json_record in tqdm(self._negative_train):
+            x = json_record['text']
+            self._X.append(x)
+            self._Y.append(0)
+            self._is_train.append(True)
+
+        for json_record in tqdm(self._positive_test):
+            x = json_record['text']
+            self._X.append(x)
+            self._Y.append(1)
+            self._is_train.append(False)
+
+        for json_record in tqdm(self._negative_test):
+            x = json_record['text']
+            self._X.append(x)
+            self._Y.append(0)
+            self._is_train.append(False)
+
+
+
+class TitleDataset(FakenewsDataset):
+
+    def __init__(self):
+        super().__init__()
+
+        for json_record in tqdm(self._positive_train):
+            x = json_record['title']
+            self._X.append(x)
+            self._Y.append(1)
+            self._is_train.append(True)
+
+        for json_record in tqdm(self._negative_train):
+            x = json_record['title']
+            self._X.append(x)
+            self._Y.append(0)
+            self._is_train.append(True)
+
+        for json_record in tqdm(self._positive_test):
+            x = json_record['title']
+            self._X.append(x)
+            self._Y.append(1)
+            self._is_train.append(False)
+
+        for json_record in tqdm(self._negative_test):
+            x = json_record['title']
+            self._X.append(x)
+            self._Y.append(0)
+            self._is_train.append(False)
+
 if __name__ == '__main__':
     d = TitleTextDataset()
     print(d)
