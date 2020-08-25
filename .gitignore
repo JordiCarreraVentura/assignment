@@ -123,3 +123,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+data/real_train.json
+data/real_test.json
+data/fake_train.json
+data/fake_test.json
+data/clusters.json
