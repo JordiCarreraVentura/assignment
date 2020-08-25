@@ -128,3 +128,8 @@ data/real_test.json
 data/fake_train.json
 data/fake_test.json
 data/clusters.json
+<TextDataset <1000=1 1000=0>>.nb_char.csv
+<TextDataset <1000=1 1000=0>>.nb_word.csv
+<TextDataset <1000=1 1000=0>>.svm_word.csv
+<TitleDataset <1000=1 1000=0>>.nb_word.csv
+<TitleTextDataset <1000=1 1000=0>>.nb_word.csv
