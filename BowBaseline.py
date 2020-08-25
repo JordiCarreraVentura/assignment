@@ -55,7 +55,7 @@ if __name__ == '__main__':
     ]
 
     # 'GridSearchCV' defaults to stratified k-fold
-    grid = GridSearchCV(ppln, cv=5, n_jobs=1, param_grid=param_grid, verbose=4)
+    grid = GridSearchCV(ppln, cv=5, n_jobs=4, param_grid=param_grid, verbose=4)
 
     X, Y = list(zip(*d))
     grid.fit(X, Y)
