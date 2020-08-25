@@ -30,11 +30,12 @@ if __name__ == '__main__':
             'vec__analyzer': ['word'],
             'vec__max_df': [0.2, 0.5, 0.8],
             'vec__min_df': [2, 5, 10],
-            'cls_solver': ['lbfgs'],
+            'cls__solver': ['lbfgs'],
             'cls__tol': [0.0001, 0.001, 0.005, 0.01],
             'cls__C': [0.5, 0.8, 1.0],
             'cls__max_iter': [50, 100, 200, 500],
-            'cls__penalty': ['l1', 'l2'],
+            'cls__penalty': ['l2'],
+            #'cls__penalty': ['l1', 'l2'],
         },
         {
             'vec__max_features': [10000, 20000, 30000, 1000000],
@@ -44,11 +45,12 @@ if __name__ == '__main__':
             'vec__analyzer': ['char'],
             'vec__max_df': [0.2, 0.5, 0.8],
             'vec__min_df': [2, 5, 10],
-            'cls_solver': ['lbfgs'],
+            'cls__solver': ['lbfgs'],
             'cls__tol': [0.0001, 0.001, 0.005, 0.01],
             'cls__C': [0.5, 0.8, 1.0],
             'cls__max_iter': [50, 100, 200, 500],
-            'cls__penalty': ['l1', 'l2'],
+            'cls__penalty': ['l2'],
+            #'cls__penalty': ['l1', 'l2'],
         }
     ]
 
