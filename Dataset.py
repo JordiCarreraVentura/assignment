@@ -1,5 +1,7 @@
 from collections import Counter
 
+from FeatureExtraction import FeatureExtractor
+
 from tools import from_json
 
 from tqdm import tqdm
@@ -177,6 +179,28 @@ class TitleDataset(FakenewsDataset):
             self._X.append(x)
             self._Y.append(0)
             self._is_train.append(False)
+
+
+
+
+class NormalizedTitleTextDataset(TitleTextDataset):
+
+    remove_entities=True
+    remove_nonalpha=True
+    remove_stopwords=True
+    lowercase=False
+
+    def __init__(self):
+    
+        super().__init__()
+        fext = FeatureExtractor(
+            remove_entities = self.remove_entities,
+            remove_nonalpha = self.remove_nonalpha,
+            remove_stopwords = self.remove_stopwords
+        )
+        self._X = fext.transform(self._X)
+        
+
 
 if __name__ == '__main__':
     d = TitleTextDataset()
