@@ -1,3 +1,5 @@
+import random
+
 from collections import Counter
 
 from FeatureExtraction import FeatureExtractor
@@ -52,6 +54,14 @@ class Dataset:
         ):
             if is_train:
                 yield x, y
+    
+    def sample(self, n, test=False):
+        if test:
+            xy = list(self.test())
+        else:
+            xy = list(self.train())
+        sampled = random.sample(xy, n if n < len(xy) else len(xy))
+        return sampled
     
     def test(self):
         for x, y, is_train in zip(
