@@ -167,167 +167,68 @@ param_grids = {
 
 
 
+    # Hypothesis 5: standard parameter exploration
 
-
-
-
-    # Other hypotheses
-
-    'nb_word': [
+    'nb_param': [
         {
-#             'fext__remove_entities': [True, False],
-#             'fext__remove_nonalpha': [True, False],
-#             'fext__remove_stopwords': [True, False],
-            'vec': [CountVectorizer(), TfidfVectorizer()],
+            'vec': [CountVectorizer()],
             'vec__max_features': [15000],
             'vec__ngram_range': [(1, 1)],
             'vec__analyzer': ['word'],
-            'vec__max_df': [0.5],
-            'vec__min_df': [2],
-            
-#             'vec': [CountVectorizer(), TfidfVectorizer()],
-#             'vec__max_features': [10000, 20000, 30000, 1000000],
-#             'vec__ngram_range': [(1, 1), (1, 2)],
-#             'vec__analyzer': ['word'],
-#             'vec__max_df': [0.2, 0.5, 0.8],
-#             'vec__min_df': [2, 5, 10],
-
-#             'vec': [CountVectorizer(), TfidfVectorizer()],
-#             'vec__max_features': [10000, 20000],
-#             'vec__ngram_range': [(1, 1), (1, 2)],
-#             'vec__analyzer': ['word'],
-#             'vec__max_df': [0.2, 0.5],
-#             'vec__min_df': [2, 5],
-        }
-    ],
-    
-    'svm_word': [
-        {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            #'vec__max_features': [10000, 20000, 30000, 1000000],
-            'vec__max_features': [10000, 20000],
-            'vec__ngram_range': [(1, 1), (1, 2)],
-            'vec__analyzer': ['word'],
-            #'vec__max_df': [0.2, 0.5, 0.8],
-            'vec__max_df': [0.2, 0.5],
-            #'vec__min_df': [2, 5, 10],
-            'vec__min_df': [2, 5],
+            'vec__max_df': [0.2, 0.5, 0.8],
+            'vec__min_df': [2, 5, 10],
         }
     ],
 
-    'nb_char': [
+    'svm_param': [
         {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            #'vec__max_features': [10000, 20000, 30000, 1000000],
-            'vec__max_features': [2000, 5000],
-            'vec__ngram_range': [
-                #(2, 3), (3, 4), (4, 5), (2, 4), (2, 5), (3, 5)
-                (2, 3), (2, 5), (3, 5)
-            ],
-            'vec__analyzer': ['char'],
-            #'vec__max_df': [0.2, 0.5, 0.8],
-            'vec__max_df': [0.2, 0.5],
-            #'vec__min_df': [2, 5, 10],
-            'vec__min_df': [2, 5],
-        }
-    ],
-    
-    'svm_char': [
-        {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            #'vec__max_features': [10000, 20000, 30000, 1000000],
-            'vec__max_features': [2000, 5000],
-            'vec__ngram_range': [
-                #(2, 3), (3, 4), (4, 5), (2, 4), (2, 5), (3, 5)
-                (2, 3), (2, 5), (3, 5)
-            ],
-            'vec__analyzer': ['char'],
-            #'vec__max_df': [0.2, 0.5, 0.8],
-            'vec__max_df': [0.2, 0.5],
-            #'vec__min_df': [2, 5, 10],
-            'vec__min_df': [2, 5],
-        }
-    ],
-    
-    'log_word': [
-        {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            #'vec__max_features': [10000, 20000, 30000, 1000000],
-            'vec__max_features': [10000, 20000],
-            'vec__ngram_range': [(1, 1), (1, 2)],
+            'vec': [TfidfVectorizer()],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1)],
             'vec__analyzer': ['word'],
-            #'vec__max_df': [0.2, 0.5, 0.8],
-            'vec__max_df': [0.2, 0.5],
-            #'vec__min_df': [2, 5, 10],
-            'vec__min_df': [2, 5],
-            'cls__solver': ['lbfgs'],
-            #'cls__tol': [0.0001, 0.001, 0.005, 0.01],
-            #'cls__C': [0.5, 0.8, 1.0],
-            'cls__tol': [0.0001],
-            'cls__C': [1.0],
-            #'cls__max_iter': [50, 100, 200, 500],
-            #'cls__max_iter': [50, 100, 200],
-            'cls__max_iter': [100],
-            'cls__penalty': ['l2'],
-            #'cls__penalty': ['l1', 'l2'],
-        },
-    ],
-    
-    'log_char': [
-        {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            #'vec__max_features': [10000, 20000, 30000, 1000000],
-            'vec__max_features': [2000, 5000],
-            'vec__ngram_range': [
-                #(2, 3), (3, 4), (4, 5), (2, 4), (2, 5), (3, 5)
-                (2, 3), (2, 5), (3, 5)
-            ],
-            'vec__analyzer': ['char'],
-            #'vec__max_df': [0.2, 0.5, 0.8],
-            'vec__max_df': [0.2, 0.5],
-            #'vec__min_df': [2, 5, 10],
-            'vec__min_df': [2, 5],
-            'cls__solver': ['lbfgs'],
-            #'cls__tol': [0.0001, 0.001, 0.005, 0.01],
-            #'cls__C': [0.5, 0.8, 1.0],
-            'cls__tol': [0.0001],
-            'cls__C': [1.0],
-            #'cls__max_iter': [50, 100, 200, 500],
-            #'cls__max_iter': [50, 100, 200],
-            'cls__max_iter': [100],
-            'cls__penalty': ['l2'],
-            #'cls__penalty': ['l1', 'l2'],
+            'vec__max_df': [0.2, 0.5, 0.8],
+            'vec__min_df': [2, 5, 10],
         }
     ],
-    
-    'dt_word': [
+
+    'log_param': [
         {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            #'vec__max_features': [10000, 20000, 30000, 1000000],
-            'vec__max_features': [10000, 20000],
-            'vec__ngram_range': [(1, 1), (1, 2)],
+            'vec': [TfidfVectorizer()],
             'vec__analyzer': ['word'],
-            #'vec__max_df': [0.2, 0.5, 0.8],
-            'vec__max_df': [0.2, 0.5],
-            #'vec__min_df': [2, 5, 10],
-            'vec__min_df': [2, 5],
+            'cls__solver': ['lbfgs'],
+            'cls__penalty': ['l2'],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1)],
+            'vec__max_df': [0.2, 0.5, 0.8],
+            'vec__min_df': [2, 5, 10],
+            'cls__tol': [0.0001, 0.001, 0.005, 0.01],
+            'cls__C': [0.5, 0.8, 1.0],
+            'cls__max_iter': [50, 100, 200],
+        }
+    ],
+
+    'dt_param': [
+        {
+            'vec': [TfidfVectorizer()],
+            'vec__analyzer': ['word'],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1)],
+            'vec__max_df': [0.2, 0.5, 0.8],
+            'vec__min_df': [2, 5, 10],
             'cls__n_estimators': [5, 10, 20],
             'cls__min_samples_split': [2, 5],
-            'cls__min_samples_leaf': [3, 5]   
+            'cls__min_samples_leaf': [3, 5]
         }
     ],
-    
-    'gb_word': [
+
+    'gb_param': [
         {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            #'vec__max_features': [10000, 20000, 30000, 1000000],
-            'vec__max_features': [10000, 20000],
-            'vec__ngram_range': [(1, 1), (1, 2)],
+            'vec': [TfidfVectorizer()],
             'vec__analyzer': ['word'],
-            #'vec__max_df': [0.2, 0.5, 0.8],
-            'vec__max_df': [0.2, 0.5],
-            #'vec__min_df': [2, 5, 10],
-            'vec__min_df': [2, 5],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1)],
+            'vec__max_df': [0.2, 0.5, 0.8],
+            'vec__min_df': [2, 5, 10],
             'cls__n_estimators': [5, 10, 20],
             'cls__learning_rate': [0.1, 0.25, 0.5],
             'cls__min_samples_split': [2, 10],
@@ -335,6 +236,5 @@ param_grids = {
             'cls__tol': [0.0001, 0.001, 0.01],
             'cls__validation_fraction': [0.1, 0.2, 0.3],  
         }
-    ],
-    
+    ]
 }
