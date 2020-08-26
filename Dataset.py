@@ -204,6 +204,19 @@ class NormalizedTitleTextDataset(TitleTextDataset):
 
 if __name__ == '__main__':
     d = TitleTextDataset()
+    
+    from tools import to_csv
+    XY = [('text', 'label')]
+    for x, y in d.train():
+        XY.append((x, y))
+    to_csv(XY, 'train.csv')
+    
+    XY = [('text', 'label')]
+    for x, y in d.test():
+        XY.append((x, y))
+    to_csv(XY, 'test.csv')
+    exit()
+    
     print(d)
     
     print(len(list(d.train())))
