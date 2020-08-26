@@ -136,3 +136,6 @@ data/clusters.json
 reports/*
 models/*
 neural/*
+rnn_cnn.py
+test.csv
+train.csv
