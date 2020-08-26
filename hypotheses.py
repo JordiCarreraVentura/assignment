@@ -162,48 +162,37 @@ HYPOTHESIS_4 = (hypothesis, datasets, pipelines)
 
 
 
+# Hypothesis 5: standard parameter exploration
 
+datasets = [TitleTextDataset]
+hypothesis = 'param'
 pipelines = [
 
-    ('nb_word', Pipeline([
-        #('fext', FeatureExtractor()),
+    ('nb_param', Pipeline([
         ('vec', None),
         ('cls', MultinomialNB())
     ])),
 
-#     ('svm_word', Pipeline([
-#         ('vec', None),
-#         ('cls', LinearSVC())
-#     ])),
-# 
-#     ('nb_char', Pipeline([
-#         ('vec', None),
-#         ('cls', MultinomialNB())
-#     ])),
-# 
-#     ('svm_char', Pipeline([
-#         ('vec', None),
-#         ('cls', LinearSVC())
-#     ])),
+    ('svm_param', Pipeline([
+        ('vec', None),
+        ('cls', LinearSVC())
+    ])),
 
-    ('log_word', Pipeline([
+    ('log_param', Pipeline([
         ('vec', None),
         ('cls', LogisticRegression())
     ])),
-# 
-#     ('log_char', Pipeline([
-#         ('vec', None),
-#         ('cls', LogisticRegression())
-#     ])),
-# 
-#     ('dt_word', Pipeline([
-#         ('vec', None),
-#         ('cls', RandomForestClassifier()),
-#     ])),
-# 
-#     ('gb', Pipeline([
-#         ('vec', None),
-#         ('cls', GradientBoostingClassifier()),
-#     ])),
     
+    ('dt_param', Pipeline([
+        ('vec', None),
+        ('cls', RandomForestClassifier()),
+    ])),
+
+    ('gb_param', Pipeline([
+        ('vec', None),
+        ('cls', GradientBoostingClassifier()),
+    ])),
+
 ]
+
+HYPOTHESIS_5 = (hypothesis, datasets, pipelines)
