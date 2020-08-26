@@ -33,6 +33,18 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 
 from sklearn.svm import LinearSVC
+    
+from TransformerDocumentEncoders import (
+    SentenceBlockAveragePooler,
+    SentenceBlockMaximumPooler,
+    SentenceBlockMedianPooler,
+    SentenceLevelAveragePooler,
+    SentenceLevelMedianPooler,
+    SentenceLevelMaximumPooler,
+    StringConcatenationEncoder
+)
+
+
 
 
     
@@ -196,3 +208,58 @@ pipelines = [
 ]
 
 HYPOTHESIS_5 = (hypothesis, datasets, pipelines)
+
+
+
+
+
+
+# Hypothesis 6: block size impacts performance
+
+hypothesis = 'sentence_transformer__block_size'
+
+classifiers = [
+    LogisticRegression(),
+    LinearSVC(),
+    RandomForestClassifier()
+]
+
+columns = 'k,mean_test_score,std_test_score,rank_test_score,param_encoder,param_encoder__block_size'.split(',')
+
+param_grid = {
+    'encoder': [
+        SentenceBlockAveragePooler(),
+        SentenceBlockMaximumPooler(),
+        SentenceBlockMedianPooler()
+    ],
+    'encoder__block_size': [1, 3, 5, 10]
+    #'encoder__block_size': [3]
+}
+
+HYPOTHESIS_6 = (hypothesis, classifiers, param_grid, columns)
+
+
+
+
+# Hypothesis 7: PENDING
+
+hypothesis = 'sentence_transformer__sentence_encoders'
+
+columns = 'k,mean_test_score,std_test_score,rank_test_score,param_encoder'.split(',')
+
+classifiers = [
+    LogisticRegression(),
+    LinearSVC(),
+    RandomForestClassifier()
+]
+
+param_grid = {
+    'encoder': [
+        SentenceLevelAveragePooler(),
+        SentenceLevelMaximumPooler(),
+        SentenceLevelMedianPooler(),
+        StringConcatenationEncoder(),
+    ]
+}
+
+HYPOTHESIS_7 = (hypothesis, classifiers, param_grid, columns)
