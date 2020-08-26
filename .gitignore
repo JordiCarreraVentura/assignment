@@ -135,3 +135,4 @@ data/clusters.json
 <TitleTextDataset <1000=1 1000=0>>.nb_word.csv
 reports/*
 models/*
+neural/*
