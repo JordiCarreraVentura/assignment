@@ -11,11 +11,12 @@ from Dataset import (
 
 from FeatureExtraction import FeatureExtractor
 
-from hypothesis import (
+from hypotheses import (
     HYPOTHESIS_1,
     HYPOTHESIS_2,
     HYPOTHESIS_3,
-    HYPOTHESIS_4
+    HYPOTHESIS_4,
+    HYPOTHESIS_5
 )
 
 from params import param_grids
@@ -69,13 +70,19 @@ if __name__ == '__main__':
     
     # Hypothesis 3: n-gram features improve performance
     # (confirmed for discriminative models, ~+1% F1;
-    # refuted for Naive Bayes.)
+    # refuted for Naive Bayes)
     hypothesis, datasets, pipelines = HYPOTHESIS_3
     
     # Hypothesis 4: character n-gram features improve performance
+    # (refuted, -0.5-1% F1 across all models; there may be some
+    # generalization benefits thanks to the use of subword features
+    # but the effect does not seem noticeable in data from the same
+    # domain)
     hypothesis, datasets, pipelines = HYPOTHESIS_4
 
-
+    # Hypothesis 5: standard exploration of the parameter space 
+    # using grid search
+    hypothesis, datasets, pipelines = HYPOTHESIS_5
     
 
     for di, dataset in enumerate(datasets):
