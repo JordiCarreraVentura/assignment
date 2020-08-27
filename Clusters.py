@@ -240,7 +240,7 @@ if __name__ == '__main__':
     
     X, Y = list(zip(*d))
     
-    X = random.sample(X, int(len(X) * 0.2))
+    #X = random.sample(X, int(len(X) * 0.2))
     
     vec = TfidfVectorizer(stop_words='english', min_df=3, max_df=0.5)
     mat = vec.fit_transform(X).todense()
