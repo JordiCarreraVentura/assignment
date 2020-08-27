@@ -46,6 +46,7 @@ class Cluster:
         self._features = self._vec.get_feature_names()
         self.id = docid
         self.titles = {docid: title}
+        self.cluster_name = None
         if sims:
             sims, ids, titles = list(zip(*sims))
             self.elements = set(ids)
@@ -73,6 +74,8 @@ class Cluster:
         return w
     
     def make_cluster_name(self):
+        if self.cluster_name:
+            return self.cluster_name
         all_titles = [
             [w.lower() for w in tokenizer(self.titles[docid])]
             for docid in self.items()
@@ -96,7 +99,8 @@ class Cluster:
                     gram_dist[gram] += tfidf_weight * n
         if not gram_dist.most_common():
             return None
-        return ' '.join(gram_dist.most_common()[0][0])
+        self.cluster_name = ' '.join(gram_dist.most_common()[0][0])
+        return self.cluster_name
         
     
     def __make_record(self, docid):
