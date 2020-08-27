@@ -72,7 +72,7 @@ Finally, **cluster names are generated** when serializing the output (which is d
 1. the titles are tokenized and n-grams with _n: n ∈ {1, 2, 3, 4, 5}_  are extracted (`Clusters.py:85.100)`
     1. that don't contain stopwords in n-gram-initial or n-gram final position and
     1. that don't contain non-alphabetical expressions;
-1. n-grams are then scored by the sum of the TFIDF of their consistuent tokens times the order of the n-gram (to prefer longer expressions), $n\ \sum_{i=1}^{|gram|} TFIDF(gram_i)$ ;
+1. n-grams are then scored by the sum of the TFIDF of their consistuent tokens times the order of the n-gram (to prefer longer expressions), $$n\ \sum_{i=1}^{|gram|} TFIDF(gram_i)$$ ;
 1. the highest scoring n-gram is returned as the title;
 1. each cluster's title is cached the first time it is generated and re-used by all elements in that cluster to avoid regenerating every time (which was found to greatly hurt performance due to the relatively intensive matrix traversal operations involved).
 
