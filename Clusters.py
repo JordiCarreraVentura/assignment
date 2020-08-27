@@ -193,7 +193,7 @@ def calculate_elementwise_similarities(_mat):
 
 
 def clusterize(
-    X, vec, mat, lower_bound_ratio=0.05, noise_margin=0.01
+    X, vec, mat, lower_bound_ratio=0.05, ratio_over_best=0.6
 ):
 
     _mat = mat.tolist()    
@@ -206,17 +206,16 @@ def clusterize(
     clusters = []
     space = list(sims_by_docid.items())
     for docid, sims in tqdm(space):
-        cl = Cluster(X, vec, _mat, title(X, docid), docid, sims)
 
-        if not sims:
-            clusters.append(cl)
-            continue
+        if sims:        
+            best_sim = sims[0][0]
+            sims = [
+                record for record in sims
+                if record[0] / best_sim >= ratio_over_best
+                and record[0] >= relevance_threshold
+            ]
         
-        best_sim = sims[0][0]
-        noise_area = abs(best_sim - relevance_threshold) / relevance_threshold
-        if noise_area < noise_margin:
-            clusters.append(Cluster(X, vec, _mat, title(X, docid), docid, []))
-            continue
+        cl = Cluster(X, vec, _mat, title(X, docid), docid, sims)
 
         if not clusters:
             clusters.append(cl)
