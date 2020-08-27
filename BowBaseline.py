@@ -1,5 +1,6 @@
 from __future__ import print_function, division
 
+import sys
 import numpy as np
 
 from Dataset import (
@@ -36,6 +37,9 @@ from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import (
     accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
     classification_report,
     confusion_matrix
 )
@@ -59,32 +63,84 @@ CV = 3
 N_JOBS = 8
 VERBOSITY = 0
 
+HYPOTHESES = {
 
-if __name__ == '__main__':    
-    
     # Hypothesis 1: input clean-up improves performance (refuted)
-    hypothesis, datasets, pipelines = HYPOTHESIS_1
-    
+    '1': HYPOTHESIS_1,
+
     # Hypothesis 2: title information improves performance (confirmed, +~1% F1)
-    hypothesis, datasets, pipelines = HYPOTHESIS_2
+    '2': HYPOTHESIS_2,
     
     # Hypothesis 3: n-gram features improve performance
     # (confirmed for discriminative models, ~+1% F1;
     # refuted for Naive Bayes)
-    hypothesis, datasets, pipelines = HYPOTHESIS_3
+    '3': HYPOTHESIS_3,
     
     # Hypothesis 4: character n-gram features improve performance
     # (refuted, -0.5-1% F1 across all models; there may be some
     # generalization benefits thanks to the use of subword features
     # but the effect does not seem noticeable in data from the same
     # domain)
-    hypothesis, datasets, pipelines = HYPOTHESIS_4
+    '4': HYPOTHESIS_4,
 
     # Hypothesis 5: standard exploration of the parameter space 
     # using grid search
-    hypothesis, datasets, pipelines = HYPOTHESIS_5
-    
+    '5': HYPOTHESIS_5
+}
 
+
+def precision(Y, _Y):
+    return round(precision_score(Y, _Y), 2)
+
+def recall(Y, _Y):
+    return round(recall_score(Y, _Y), 2)
+
+def f1(Y, _Y):
+    return round(f1_score(Y, _Y), 2)
+
+def accuracy(Y, _Y):
+    return round(accuracy_score(Y, _Y), 2)
+
+
+
+def report(d, hypothesis, ppln_name, grid):
+
+    row_range = list(range(len(list(grid.cv_results_.values())[0])))
+    rows = [[] for _ in row_range]
+    keys = []
+    csv_name = '.'.join([hypothesis, d.__class__.__name__, ppln_name])
+    for key, col_array in (list(grid.cv_results_.items())):
+        if len(keys) < len(grid.cv_results_.keys()):
+            keys.append(key)
+        for i, cell in enumerate(col_array):
+            rows[i].append(cell)
+
+    rows = sorted(
+        rows,
+        reverse=True,
+        key=lambda x: x[keys.index('mean_test_score')]
+    )
+
+    to_pickle(grid, 'models/%s.p' % csv_name)
+    
+    to_csv(
+        [keys] + rows,
+        'reports/%s.csv' % csv_name
+    )
+
+
+
+
+if __name__ == '__main__':    
+    
+    hypothesis_id = sys.argv[1]
+    
+    hypothesis, datasets, pipelines = HYPOTHESES[hypothesis_id]
+
+    rows = [(
+        'dataset', 'pipeline', 'vectorizer', 'classifier',
+        'precision', 'recall', 'f1', 'accuracy'
+    )]
     for di, dataset in enumerate(datasets):
         for pj, (ppln_name, ppln) in enumerate(pipelines):
 
@@ -101,34 +157,26 @@ if __name__ == '__main__':
             )
             grid.fit(X, Y)
 
-            print(grid.best_estimator_.named_steps.items())
+            #print(grid.best_estimator_.named_steps.items())
+        
+            report(d, hypothesis, ppln_name, grid)
+            
 
             # Predict on the held-out split
             vec = grid.best_estimator_['vec']
             cls = grid.best_estimator_['cls']
             X, Y = list(zip(*d.test()))
             Y_ = cls.predict(vec.transform(X))
-
-            args = (di + 1, len(datasets), pj + 1, len(pipelines), ppln_name)
-            print('\n\n(%d/%d, %d/%d)\n========== %s ==========' % args)
-            print(grid.best_score_)
-            print('---------- grid-search ----------\n', classification_report(Y, Y_))
-        
-            rows = [[] for _ in range(len(list(grid.cv_results_.values())[0]))]
-            keys = []
-            for key, col_array in grid.cv_results_.items():
-                keys.append(key)
-                for i, cell in enumerate(col_array):
-                    rows[i].append(cell)
-            _rows = [keys] + sorted(
-                rows,
-                reverse=True,
-                key=lambda x: x[keys.index('mean_test_score')]
+            
+            p = precision(Y, Y_)
+            r = recall(Y, Y_)
+            f = f1(Y, Y_)
+            a = accuracy(Y, Y_)
+            row = (
+                d.__class__.__name__, ppln_name,
+                vec.__class__.__name__,
+                cls.__class__.__name__, 
+                p, r, f, a
             )
-            csv_name = '.'.join([str(d), ppln_name])
-            to_csv(_rows, 'reports/%s.%s.csv' % (hypothesis, csv_name))
-            to_txt(
-                str(classification_report(Y, Y_)),
-                'reports/%s.%s.txt' % (hypothesis, csv_name)
-            )
-            to_pickle(grid, 'models/%s.%s.p' % (hypothesis, csv_name))
+            rows.append(row)
+            to_csv(rows, 'reports/%s.csv' % hypothesis)
