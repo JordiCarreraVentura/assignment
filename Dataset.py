@@ -212,7 +212,48 @@ class NormalizedTitleTextDataset(TitleTextDataset):
         
 
 
+
+
+class ClustersDataset(Dataset):
+    
+    def __init__(self):
+        super().__init__()
+        clusterized_documents = [
+        
+            (
+               '%s%s%s' % (
+                    json_record['title'].strip(),
+                    ' ' if has_sentence_end(json_record['title']) else '. ',
+                    json_record['text']
+                ),
+                
+                json_record['cluster_name']
+            )
+
+            for json_record in from_json('data/clusters.json')
+        ]
+        self._X, self._Y = list(zip(*clusterized_documents))
+        for x in self._X:
+            if random.random() >= 0.8:
+                self._is_train.append(True)
+            else:
+                self._is_train.append(False)
+    
+    
+    
+
+
+
+
 if __name__ == '__main__':
+
+    d = ClustersDataset()
+    for x, y in d:
+        print(y, x[:150])
+    exit()
+    
+
+
     d = TitleTextDataset()
     
     from tools import to_csv
