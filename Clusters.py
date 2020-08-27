@@ -9,10 +9,6 @@ from copy import deepcopy as cp
 from Dataset import TitleDataset, TitleTextDataset
  
 from FeatureExtraction import STOPWORDS
- 
-from hypotheses import (
-    HYPOTHESIS_9
-)
 
 from nltk import (
     ngrams,
@@ -116,23 +112,6 @@ class Cluster:
     
     def __str__(self):
         return '<%d %d>' % (self.id, len(self))
-
-#     for docid, sims in sims_by_docid.items():
-#         print('\n' * 5)
-#         print(title(X, docid))
-# 
-#         best_sim = sims[0][0]
-# 
-#         for record in sims:
-#             sim = record[0]
-#             if sim < relevance_threshold:
-#                 print(0, 2, record)
-#                 continue
-#             delta = best_sim - sim
-#             if delta / best_sim < ratio:
-#                 print(1, record)
-#             else:
-#                 print(0, 3, record)
 
     def __contains__(self, cluster, max_overlap=0.34):
         a = self.elements
