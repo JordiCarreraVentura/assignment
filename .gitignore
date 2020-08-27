@@ -139,3 +139,7 @@ neural/*
 rnn_cnn.py
 test.csv
 train.csv
+__Clusters.py
+_Clusters.py
+trash/CNN classifier.ipynb
+clusters.out.json
