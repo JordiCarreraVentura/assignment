@@ -239,10 +239,10 @@ if __name__ == '__main__':
     d = TitleTextDataset()
     
     X, Y = list(zip(*d))
-    X = [
-        '%s. %s' % (o['title'], o['text'])
-        for o in from_json('data/clusters.json')
-    ]
+#     X = [
+#         '%s. %s' % (o['title'], o['text'])
+#         for o in from_json('data/clusters.json')
+#     ]
     
     #X = random.sample(X, int(len(X) * 0.2))
     
