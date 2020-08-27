@@ -41,32 +41,46 @@ def summarize_csv(rows, columns):
     return out
 
 
-def report(k, hypothesis, classifier, rows, grid):
-    setting_name = '%s.%s' % (hypothesis, classifier.__class__.__name__)
+def report(k, hypothesis, classifier, rows, keys, arg_val, grid):
+    cls_name = classifier.__class__.__name__
     _rows = [[] for _ in range(len(list(grid.cv_results_.values())[0]))]
+    cls_row = [cls_name for _ in range(len(list(grid.cv_results_.values())[0]))]
     k_row = [k for _ in range(len(list(grid.cv_results_.values())[0]))]
-    for key, col_array in ([('k', k_row)] + list(grid.cv_results_.items())):
-        if len(keys) < len(grid.cv_results_.keys()) + 1:
+    for key, col_array in (
+        [('k', k_row)]
+        + [('classifier', cls_row)]
+        + list(grid.cv_results_.items())
+    ):
+        if len(keys) < len(grid.cv_results_.keys()) + 2:
             keys.append(key)
         for i, cell in enumerate(col_array):
             _rows[i].append(cell)
     rows += _rows
 
-    _rows = sorted(
-        _rows,
+    rows = sorted(
+        rows,
         reverse=True,
         key=lambda x: x[keys.index('mean_test_score')]
     )
+    
+    best_f = rows[0][keys.index('mean_test_score')]
+    if best_f > arg_val:
+        print('>>>> NEW BEST:', rows[0])
+        to_pickle(grid, 'models/%s.p' % hypothesis)
+        arg_val = best_f
+    
     to_csv(
-        [keys] + _rows,
-        'reports/%s.csv' % setting_name
+        [keys] + rows,
+        'reports/%s.csv' % hypothesis
     )
     to_csv(
-        summarize_csv([keys] + _rows, columns),
-        'reports/%s.summary.csv' % setting_name
+        summarize_csv([keys] + rows, columns),
+        'reports/%s.summary.csv' % hypothesis
     )
+    
+    return arg_val
 
-    to_pickle(grid, 'models/%s.p' % setting_name)
+
 
 
 
@@ -86,14 +100,17 @@ if __name__ == '__main__':
     
     dataset = TitleTextDataset()
     
-    K = [15, 100, len(dataset)]
-    #K = [15]
-    
+    K = [15, 50, 150, 400]
+#     K = [15]
+
+    rows = []
+    keys = []
+    arg_val = 0
     for k in K:
         
         train_X, Y_train = list(zip(*dataset.sample(k)))
         test_X, Y_test = list(zip(*dataset.test()))
-        #test_X, Y_test = list(zip(*dataset.sample(5, test=True)))
+#         test_X, Y_test = list(zip(*dataset.sample(5, test=True)))
 
         skf = StratifiedKFold(n_splits=CV)
         folds = list(skf.split(train_X, Y_train))
@@ -101,11 +118,7 @@ if __name__ == '__main__':
         hypothesis_id = sys.argv[1]
         hypothesis, classifiers, param_grid, columns = HYPOTHESES[hypothesis_id]
     
-        rows = []
-        keys = []
         for classifier in classifiers:
-
-            arg_val = 0
 
             _param_grid = param_grid
             _param_grid['encoder__model'] = [model]
@@ -129,4 +142,6 @@ if __name__ == '__main__':
 
             print(grid.best_estimator_.named_steps)
         
-            report(k, hypothesis, classifier, rows, grid)
+            arg_val = report(
+                k, hypothesis, classifier, rows, keys, arg_val, grid
+            )
