@@ -1,4 +1,5 @@
 from Dataset import (
+    ClustersDataset,
     NormalizedTitleTextDataset,
     TextDataset,
     TitleDataset,
@@ -52,6 +53,8 @@ from TransformerDocumentEncoders import (
 
 datasets = [TitleTextDataset]
 hypothesis = 'fext'
+
+
 pipelines = [
 
     ('nb_baseline', Pipeline([
@@ -224,7 +227,7 @@ classifiers = [
     RandomForestClassifier()
 ]
 
-columns = 'k,mean_test_score,std_test_score,rank_test_score,param_encoder,param_encoder__block_size'.split(',')
+columns = 'k,classifier,mean_test_score,std_test_score,rank_test_score,param_encoder,param_encoder__block_size'.split(',')
 
 param_grid = {
     'encoder': [
@@ -245,7 +248,7 @@ HYPOTHESIS_6 = (hypothesis, classifiers, param_grid, columns)
 
 hypothesis = 'sentence_transformer__sentence_encoders'
 
-columns = 'k,mean_test_score,std_test_score,rank_test_score,param_encoder'.split(',')
+columns = 'k,classifier,mean_test_score,std_test_score,rank_test_score,param_encoder'.split(',')
 
 classifiers = [
     LogisticRegression(),
@@ -263,3 +266,61 @@ param_grid = {
 }
 
 HYPOTHESIS_7 = (hypothesis, classifiers, param_grid, columns)
+
+
+
+
+# Hypothesis 8: model stacking improves performance
+
+datasets = [TitleTextDataset]
+hypothesis = 'stacking'
+pipelines = [
+
+    ('nb_stack', Pipeline([
+        ('vec', None),
+        ('cls', MultinomialNB())
+    ])),
+
+    ('svm_stack', Pipeline([
+        ('vec', None),
+        ('cls', LinearSVC())
+    ])),
+
+    ('log_stack', Pipeline([
+        ('vec', None),
+        ('cls', LogisticRegression())
+    ])),
+
+    ('dt_stack', Pipeline([
+        ('vec', None),
+        ('cls', RandomForestClassifier())
+    ]))
+]
+
+HYPOTHESIS_8 = (hypothesis, datasets, pipelines)
+
+
+
+
+
+
+
+# Hypothesis 9: clustering is a BoW problem
+
+datasets = [ClustersDataset]
+hypothesis = 'clusters'
+pipelines = [
+
+    ('nb_clusters', Pipeline([
+        ('vec', None),
+        ('cls', MultinomialNB())
+    ])),
+
+    ('svm_clusters', Pipeline([
+        ('vec', None),
+        ('cls', LinearSVC())
+    ]))
+
+]
+
+HYPOTHESIS_9 = (hypothesis, datasets, pipelines)

@@ -236,5 +236,80 @@ param_grids = {
             'cls__tol': [0.0001, 0.001, 0.01],
             'cls__validation_fraction': [0.1, 0.2, 0.3],  
         }
-    ]
+    ],
+
+
+    # Hypothesis 8: model stacking improves performance
+    
+    'nb_stack': [
+        {
+            'vec': [CountVectorizer(), TfidfVectorizer()],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
+            'vec__analyzer': ['word'],
+            'vec__max_df': [0.8],
+            'vec__min_df': [2, 5, 10],
+        }
+    ],
+    
+    'svm_stack': [
+        {
+            'vec': [CountVectorizer(), TfidfVectorizer()],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
+            'vec__analyzer': ['word'],
+            'vec__max_df': [0.8],
+            'vec__min_df': [2, 5, 10],
+        }
+    ],
+    
+    'log_stack': [
+        {
+            'vec': [CountVectorizer(), TfidfVectorizer()],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
+            'vec__analyzer': ['word'],
+            'vec__max_df': [0.8],
+            'vec__min_df': [2, 5, 10],
+        }
+    ],
+    
+    'dt_stack': [
+        {
+            'vec': [CountVectorizer(), TfidfVectorizer()],
+            'vec__max_features': [15000],
+            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
+            'vec__analyzer': ['word'],
+            'vec__max_df': [0.8],
+            'vec__min_df': [2, 5, 10],
+        }
+    ],
+
+
+
+
+    # Hypothesis 9: clustering is a BoW problem
+    
+    'nb_clusters': [
+        {
+            'vec': [CountVectorizer(), TfidfVectorizer()],
+            'vec__max_features': [15000, 25000],
+            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
+            'vec__analyzer': ['word'],
+            'vec__max_df': [0.8],
+            'vec__min_df': [2, 5, 10],
+        }
+    ],
+    
+    'svm_clusters': [
+        {
+            'vec': [CountVectorizer(), TfidfVectorizer()],
+            'vec__max_features': [15000, 25000],
+            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
+            'vec__analyzer': ['word'],
+            'vec__max_df': [0.8],
+            'vec__min_df': [2, 5, 10],
+        }
+    ],
+
 }
