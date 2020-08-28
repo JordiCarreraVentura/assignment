@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 import pickle
@@ -37,3 +38,15 @@ def to_txt(text, path):
     with open(path, 'w') as wrt:
         wrt.write(text)
 
+
+def from_csv(path, delimiter=','):
+    with open(path, 'r') as rd:
+        rdr = csv.reader(rd, delimiter=delimiter)
+        return [row for row in rdr]
+
+
+def to_csv(rows, path):
+    with open(path, 'w') as wrt:
+        wrtr = csv.writer(wrt, quoting=csv.QUOTE_MINIMAL)
+        for row in rows:
+            wrtr.writerow(row)
