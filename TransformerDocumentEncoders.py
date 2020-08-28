@@ -71,11 +71,11 @@ class Encoder(BaseEstimator):
         return self.__class__.__name__
     
     def to_cache(self, X, _X):
-        arg = '_'.join([x[:90] for x in X])
+        arg = (self.model, self.block_size, '_'.join([x[:90] for x in X]))
         self.cache[arg] = _X
     
     def from_cache(self, X):
-        arg = '_'.join([x[:90] for x in X])
+        arg = (self.model, self.block_size, '_'.join([x[:90] for x in X]))
         if arg in self.cache:
             return (True, self.cache[arg])
         else:
