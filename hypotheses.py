@@ -244,7 +244,7 @@ HYPOTHESIS_6 = (hypothesis, classifiers, param_grid, columns)
 
 
 
-# Hypothesis 7: PENDING
+# Hypothesis 7: encoder choice has an impact on performance
 
 hypothesis = 'sentence_transformer__sentence_encoders'
 
@@ -298,29 +298,3 @@ pipelines = [
 ]
 
 HYPOTHESIS_8 = (hypothesis, datasets, pipelines)
-
-
-
-
-
-
-
-# Hypothesis 9: clustering is a BoW problem
-
-datasets = [ClustersDataset]
-hypothesis = 'clusters'
-pipelines = [
-
-    ('nb_clusters', Pipeline([
-        ('vec', None),
-        ('cls', MultinomialNB())
-    ])),
-
-    ('svm_clusters', Pipeline([
-        ('vec', None),
-        ('cls', LinearSVC())
-    ]))
-
-]
-
-HYPOTHESIS_9 = (hypothesis, datasets, pipelines)
