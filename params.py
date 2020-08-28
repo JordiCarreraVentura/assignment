@@ -283,33 +283,6 @@ param_grids = {
             'vec__max_df': [0.8],
             'vec__min_df': [2, 5, 10],
         }
-    ],
-
-
-
-
-    # Hypothesis 9: clustering is a BoW problem
-    
-    'nb_clusters': [
-        {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            'vec__max_features': [15000, 25000],
-            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
-            'vec__analyzer': ['word'],
-            'vec__max_df': [0.8],
-            'vec__min_df': [2, 5, 10],
-        }
-    ],
-    
-    'svm_clusters': [
-        {
-            'vec': [CountVectorizer(), TfidfVectorizer()],
-            'vec__max_features': [15000, 25000],
-            'vec__ngram_range': [(1, 1), (1, 2), (1, 3)],
-            'vec__analyzer': ['word'],
-            'vec__max_df': [0.8],
-            'vec__min_df': [2, 5, 10],
-        }
-    ],
+    ]
 
 }
