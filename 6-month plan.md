@@ -10,16 +10,20 @@ For these three desiderata, refer to section **Full system specifications** belo
 
 > - Approach taken with data i.e. what data is needed and from where, how it should be cleaned, annotated, etc.
 
-Covered in sections **Full system specifications** and **Model explainability**.
+This point is covered in sections **Full system specifications** and **Model explainability**.
 
 > - How the solution should be evaluated, made explainable, shipped to production and scaled
 
 Evaluation is covered in table **Architecture**.
+
 Explainability is discussed in depth in section **Model explainability**.
+
 Shipping and scaling is addressed in section **Deployment and scalability**.
 
 > - How will the solution constantly improve
+
 Briefly addressed in **Model explainability.4.3**.
+
 For all other purposes (steps 8-9 in **Architecture** most crucially, but also steps 3-4 to a lesser extent), we just assume an ongoing data annotation effort whereby a dedicated team of experts and linguists work together to keep the datasets update and regularly contribute documents representative of controversial issues and misinformation campaigns in current affairs.
 
 
@@ -28,13 +32,21 @@ For all other purposes (steps 8-9 in **Architecture** most crucially, but also s
 Given the following definitions
 
 $d = \text{dimensionality of the output vectors returned by the sentence encoder}$
-$D = \text{|input documents|}$
+
+$$D = \text{|input documents|}$$
+
 $M = |D|$
-$S = max_{i}^{M} |D_{i}|, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D.$
+
+$$$S = max_{i}^{M} |D_{i}|, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D.$$$
+
 $W = max_{i}^{M} max_{j}^{|D_i|} |D_{i_j}|, or the length of the longest sentence-level sequence supported by the model, that is, as the longest sentence (measured in tokens) in any of the documents in dataset D.$
+
 $V = \bigcup_{i}^{|D|} \{w: w\text{ is a spaCy token}\wedge  w\in D_i\}$
+
 $C =\text{an array of cluster labels }c: c \in C \wedge |C| = |D|\ \wedge |\{C\}| < |\{D\}|$
+
 $L = \{\text{misinformation issues/topics targeted by the detection pipeline}\}$
+
 $\lambda = |L|$
 
 we would have the following architecture:
