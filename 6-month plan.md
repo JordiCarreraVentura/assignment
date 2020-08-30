@@ -40,11 +40,11 @@ Given the following definitions
 
 <img src="https://render.githubusercontent.com/render/math?math=M = |D|">
 
-<img src="https://render.githubusercontent.com/render/math?math=S = max_{i}^{M} |D_{i}|, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D.">
+<img src="https://render.githubusercontent.com/render/math?math=S = max_{i}^{M} |D_{i}|">, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D.
 
-<img src="https://render.githubusercontent.com/render/math?math=W = max_{i}^{M} max_{j}^{|D_i|} |D_{i_j}|, or the length of the longest sentence-level sequence supported by the model, that is, as the longest sentence (measured in tokens) in any of the documents in dataset D.">
+<img src="https://render.githubusercontent.com/render/math?math=W = max_{i}^{M} max_{j}^{|D_i|} |D_{i_j}|">, or the length of the longest sentence-level sequence supported by the model, that is, as the longest sentence (measured in tokens) in any of the documents in dataset D.
 
-<img src="https://render.githubusercontent.com/render/math?math=V = \bigcup_{i}^{|D|} \{w: w\text{ is a spaCy token}\wedge  w\in D_i\}">
+<img src="https://render.githubusercontent.com/render/math?math=V = \bigcup_{i}^{|D|} \{w: w\ \text{ is a spaCy token}\wedge  w\in D_i\}">
 
 <img src="https://render.githubusercontent.com/render/math?math=C =\text{an array of cluster labels }c: c \in C \wedge |C| = |D|\ \wedge |\{C\}| < |\{D\}|">
 
