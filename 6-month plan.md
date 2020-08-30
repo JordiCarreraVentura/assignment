@@ -27,27 +27,29 @@ Briefly addressed in **Model explainability.4.3**.
 For all other purposes (steps 8-9 in **Architecture** most crucially, but also steps 3-4 to a lesser extent), we just assume an ongoing data annotation effort whereby a dedicated team of experts and linguists work together to keep the datasets update and regularly contribute documents representative of controversial issues and misinformation campaigns in current affairs.
 
 
+
+
 ## Full system specifications
 
 Given the following definitions
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="d = \text{dimensionality of the output vectors returned by the sentence encoder}" />
+https://render.githubusercontent.com/render/math?math=d = \text{dimensionality of the output vectors returned by the sentence encoder}
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="D = \text{|input documents|} />
+https://render.githubusercontent.com/render/math?math=D = \text{|input documents|} />
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="M = |D| />
+https://render.githubusercontent.com/render/math?math=M = |D| />
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="S = max_{i}^{M} |D_{i}|, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D. />
+https://render.githubusercontent.com/render/math?math=S = max_{i}^{M} |D_{i}|, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D. />
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="W = max_{i}^{M} max_{j}^{|D_i|} |D_{i_j}|, or the length of the longest sentence-level sequence supported by the model, that is, as the longest sentence (measured in tokens) in any of the documents in dataset D. />
+https://render.githubusercontent.com/render/math?math=W = max_{i}^{M} max_{j}^{|D_i|} |D_{i_j}|, or the length of the longest sentence-level sequence supported by the model, that is, as the longest sentence (measured in tokens) in any of the documents in dataset D. />
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="V = \bigcup_{i}^{|D|} \{w: w\text{ is a spaCy token}\wedge  w\in D_i\} />
+https://render.githubusercontent.com/render/math?math=V = \bigcup_{i}^{|D|} \{w: w\text{ is a spaCy token}\wedge  w\in D_i\} />
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="C =\text{an array of cluster labels }c: c \in C \wedge |C| = |D|\ \wedge |\{C\}| < |\{D\}| />
+https://render.githubusercontent.com/render/math?math=C =\text{an array of cluster labels }c: c \in C \wedge |C| = |D|\ \wedge |\{C\}| < |\{D\}| />
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="L = \{\text{misinformation issues/topics targeted by the detection pipeline}\} />
+https://render.githubusercontent.com/render/math?math=L = \{\text{misinformation issues/topics targeted by the detection pipeline}\} />
 
-<img src="https://latex.codecogs.com/gif.latex?O_t="\lambda = |L| />
+https://render.githubusercontent.com/render/math?math=\lambda = |L| />
 
 we would have the following architecture:
 
