@@ -31,23 +31,23 @@ For all other purposes (steps 8-9 in **Architecture** most crucially, but also s
 
 Given the following definitions
 
-$d = \text{dimensionality of the output vectors returned by the sentence encoder}$
+<img src="https://latex.codecogs.com/gif.latex?O_t="d = \text{dimensionality of the output vectors returned by the sentence encoder}" />
 
-$$D = \text{|input documents|}$$
+<img src="https://latex.codecogs.com/gif.latex?O_t="D = \text{|input documents|} />
 
-$M = |D|$
+<img src="https://latex.codecogs.com/gif.latex?O_t="M = |D| />
 
-$$$S = max_{i}^{M} |D_{i}|, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D.$$$
+<img src="https://latex.codecogs.com/gif.latex?O_t="S = max_{i}^{M} |D_{i}|, or the length of the longest document-level sequence supported by the model, that is, the longest document (measured in sentences) in dataset D. />
 
-$W = max_{i}^{M} max_{j}^{|D_i|} |D_{i_j}|, or the length of the longest sentence-level sequence supported by the model, that is, as the longest sentence (measured in tokens) in any of the documents in dataset D.$
+<img src="https://latex.codecogs.com/gif.latex?O_t="W = max_{i}^{M} max_{j}^{|D_i|} |D_{i_j}|, or the length of the longest sentence-level sequence supported by the model, that is, as the longest sentence (measured in tokens) in any of the documents in dataset D. />
 
-$V = \bigcup_{i}^{|D|} \{w: w\text{ is a spaCy token}\wedge  w\in D_i\}$
+<img src="https://latex.codecogs.com/gif.latex?O_t="V = \bigcup_{i}^{|D|} \{w: w\text{ is a spaCy token}\wedge  w\in D_i\} />
 
-$C =\text{an array of cluster labels }c: c \in C \wedge |C| = |D|\ \wedge |\{C\}| < |\{D\}|$
+<img src="https://latex.codecogs.com/gif.latex?O_t="C =\text{an array of cluster labels }c: c \in C \wedge |C| = |D|\ \wedge |\{C\}| < |\{D\}| />
 
-$L = \{\text{misinformation issues/topics targeted by the detection pipeline}\}$
+<img src="https://latex.codecogs.com/gif.latex?O_t="L = \{\text{misinformation issues/topics targeted by the detection pipeline}\} />
 
-$\lambda = |L|$
+<img src="https://latex.codecogs.com/gif.latex?O_t="\lambda = |L| />
 
 we would have the following architecture:
 
