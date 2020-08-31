@@ -128,7 +128,8 @@ In the next section, **Findings** we detail our findings, and in the section bel
 |True|True|True|0.9519|7|
 |True|True|False|0.9519|7|
 
-##### Table _N-grams_
+
+##### Table _N-grams_
 
 **Naive Bayes**
 
