@@ -54,12 +54,12 @@ For the fine-tuning step, we will simply use the encoded document-level embeddin
 To generate representations at the document level, the Transformer-encoded sentence embeddings will have to be aggregated (ideally while keeping the same dimensionality), which in our case will be done using one out of three possible types of pooling post-processors (average, median, or maximum pooling) or defaulting to running the encoder on the whole document text as opposed to on a per-sentence basis.
 
 
-### Baseline
+### Baseline
 
 As the baseline, and based on Assumptions.2 and Assumptions.3, we will resort to a traditional BoW model. To inform its definition in a more empirical way, as well as to get a better preliminary understanding of the task, we will test several hypotheses. Any hypotheses that we can validate will be adopted as the configuration for this model. We also expect this hypotheses to provide some insight as to how to best formalize the problem, and hence inform our final proposal of an optimal architecture for the 6-month plan.
 
 
-### Hypotheses
+### Hypotheses
 
 To create a competitive baseline as well as to find the most suitable encoder for the neural pipeline, we explored several hypotheses.
 
@@ -83,7 +83,7 @@ In the next section, **Findings** we detail our findings, and in the section bel
 
 1. **Hypothesis #1**
    1. was refuted generally speaking: on the held-out dataset, the model using input pre-processing had virtually the same performance as the baseline model across all settings;
-   1. more interestingly, it was not just refuted but actually contradicted during the cross-validation training stage, as shown in TABLE_FEXT. More specifically,
+   1. more interestingly, it was not just refuted but actually contradicted during the cross-validation training stage, as shown in **Table _Feature extraction_**. More specifically,
        1. removing entities caused a drop in performance across all settings (expected, as some entities are likely to be informative, yet still sub-optimal, since we would like the model to learn general expressions as predictors in order to avoid overfitting to particular news stories);
        1. removing stopwords caused the second largest drop in performance (also a troubling sign, as it suggests the model might be assigning weights to class-independent features and, again, overfitting to potential bias towards statistically anomalous distributions of function words, e.g. in a story about somebody spying _for_ somebody else, the preposition _for_ may actually occur more often than chance and that could be causing the model to give it a weight. We observed this phenomenon with high-frequency noise in one of the clusters, involving page ads and spam stories about e.g. Turbo tax despite the fact that the story was about a cruiser's situation during the beginning of the Covid-19 pandemic);
        1. removing non-linguistic expressions had a mixed effect (showing that numerals were probably not being used as features by the model anyway).
@@ -92,7 +92,7 @@ In the next section, **Findings** we detail our findings, and in the section bel
    1. was partially confirmed: there was a slight 1% macro-F1 improvement for Logistic Regression and Naive Bayes classifiers, and no effect for SVMs,
    1. unsurprisingly, title-only settings were the worst-performing
    1. yet, surprisingly, they still reached 88% macro-averaged F1. Although document features still amount to a 10% improvement and should therefore be used in all cases, it is puzzling that the titles alone contain enough information for the model to approach 90% F1. This implies that titles are exceptionally good summaries of the documents, and that whatever information can be captured in a 10-12-words' worth of language data, is largely the same information leveraged by the model to make its decisions. Since titles usually do not offer a lot of nuance or commentary, but provide instead of succint summary of the main idea of a document, this result suggests that the model is basing its predictions on a small set of expressions and entities rather than a broad understanding of the vocabulary of a category.
-1. **Hypothesis #3** was partially confirmed for discriminative models (table TABLE_GRAMS): it had a minor impact (+1% F1) on logistic regression and SVMs using n-grams with _n = 3_, but it actually hurt Naive Bayes (almost 6% drop in the same setting).
+1. **Hypothesis #3** was partially confirmed for discriminative models (**Table _N-grams_**): it had a minor impact (+1% F1) on logistic regression and SVMs using n-grams with _n = 3_, but it actually hurt Naive Bayes (almost 6% drop in the same setting).
 1. **Hypothesis #4** was refuted in that character n-grams did not improve performance, but they also did not hurt it, which means that it may be viable to use them as the input representation if we wanted to decrease the model size (the dimensionality of character n-gram models is substantially smaller than in word n-grams) or if we wanted to increase the model's generalization capabilities via subword processing. Based on our experiments, there is currently no such need, which is we defaulted to word n-grams for the higher training speeds.
 1. **Hypothesis #5** was largely refuted for the parameter settings we considered, but the search was not exhaustive due to time limitations so we will not discuss these results in more depth.
 1. **Hypothesis #6** had to be dropped due to time constraints.
@@ -100,7 +100,7 @@ In the next section, **Findings** we detail our findings, and in the section bel
 1. **Hypothesis #8** was refuted: although there was a 1.5%-2% improvement in F1 for any of the stacks combining SVMs and logistic regression (with either as the feature selector or as the classifier), it seems possible to trace back the improvement to the use of n-gram features.
 1. **Hypothesis #9** was confirmed: the size of the fine-tuning data was found to be a strong predictor of model performance. Refer to Results.2 for more a longer discussion.
 
-##### TABLE_FEXT
+##### Table _Feature extraction_
 
 **SVM**
 
@@ -128,7 +128,7 @@ In the next section, **Findings** we detail our findings, and in the section bel
 |True|True|True|0.9519|7|
 |True|True|False|0.9519|7|
 
-##### TABLE_GRAMS
+##### Table _N-grams_
 
 **Naive Bayes**
 
@@ -200,7 +200,7 @@ In our case, this model is `models/ngrams.TitleTextDataset.svm_ngrams.p`. See se
 
 ## Results of the Transformer fine-tuning pipeline
 
-Based on the **top-5 entries** in Table SENTENCE_ENCODERS below, we can draw the following conclusions:
+Based on the **top-5 entries** in **Table _Sentence encoders_** below, we can draw the following conclusions:
 1. All five entries are within 2% F1 (93% for the best performing setting, 91% for the 5th), which means their performance is roughly equivalent.
 2. The top predictor of high performance is hyper-parameter `k`, which corresponds to the size of the fine-tuning dataset fed to the neural sentence encoder.
     - This result is hardly surprising, as the availability of fine-tuning data is expected to improve the performance of a model in a transfer learning setting, but it is interesting to notice the difference between _k = 150_ and _k = 400_, with the latter significantly improving over the former. Although 400 instances cannot be seen as a large amount of data objectively speaking, transfer learning models have been proven to reach state-of-the-art performance on domain-specific tasks like sentiment analysis or intent detection with as few as dozens of examples. By the same logic, we would have expected our model to plateau earlier (around 150 instances) rather than to keep improving (with 400 instances). This suggests the objective may be particularly hard for the model to converge to. An obvious next step would be to replicate this methodology with _k = 2000_ (the whole task-specific training set).
@@ -212,7 +212,7 @@ Based on the **top-5 entries** in Table SENTENCE_ENCODERS below, we can draw the
    - It is worth noting, though, that baseline performance seems suspiciously high and suggests potential overfitting. The neural pipeline's results are more realistic, and still high given the difficulty of the task. We will address this issue in greater depth in the **Discussion** section.
 
 
-#### SENTENCE_ENCODERS
+#### Table _Sentence encoders_
 
 |k|classifier|mean_test_score|param_encoder|
 |---|---|---|---|
